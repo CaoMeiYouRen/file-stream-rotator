@@ -2,9 +2,15 @@
     "name": "file-stream-rotator",
     "version": "0.5.7",
     "description": "Automated stream rotation useful for log files",
-    "main": "FileStreamRotator.js",
+    "main": "dist/index.js",
+    "files": [
+        "dist"
+    ],
     "scripts": {
-        "test": "node test.js"
+        "test": "node test.js",
+        "lint": "cross-env NODE_ENV=production eslint src --fix --ext .ts,.js",
+        "build": "rimraf dist && tsc",
+        "dev": "ts-node-dev src/index.ts"
     },
     "repository": {
         "type": "git",
@@ -26,5 +32,17 @@
     "license": "MIT",
     "dependencies": {
         "moment": "^2.11.2"
+    },
+    "devDependencies": {
+        "@types/node": "^14.14.9",
+        "@typescript-eslint/eslint-plugin": "^4.8.1",
+        "@typescript-eslint/parser": "^4.8.1",
+        "cross-env": "^7.0.2",
+        "eslint": "^7.14.0",
+        "eslint-config-cmyr": "^1.0.2",
+        "rimraf": "^3.0.2",
+        "ts-node": "^9.0.0",
+        "ts-node-dev": "^1.0.0",
+        "typescript": "^4.1.2"
     }
 }

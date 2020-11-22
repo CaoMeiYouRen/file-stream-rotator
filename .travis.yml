@@ -1,5 +1,12 @@
-sudo: false
+os: linux
 language: node_js
+node_js:
+    - 14
+install:
+    - yarn
+script:
+    - npm run lint
+    - npm run build
 cache:
-  directories:
-  - node_modules
+    directories:
+        - node_modules
