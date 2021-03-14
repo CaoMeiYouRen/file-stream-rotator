@@ -16,7 +16,7 @@ import moment from 'moment'
 import crypto from 'crypto'
 import util from 'util'
 
-import events, { EventEmitter } from 'events'
+import { EventEmitter } from 'events'
 import { URL } from 'url'
 
 const staticFrequency = ['daily', 'test', 'm', 'h', 'custom']
@@ -29,7 +29,7 @@ const DATE_FORMAT = 'YYYYMMDDHHmm'
  * @returns {*}
  * @private
  */
-const _checkNumAndType = function (type: any, num: number) {
+const _checkNumAndType = function (type: any, num: number): any {
     if (typeof num === 'number') {
         switch (type) {
             case 'm':
@@ -53,7 +53,7 @@ const _checkNumAndType = function (type: any, num: number) {
  * @returns {*}
  * @private
  */
-const _checkDailyAndTest = function (freqType: any) {
+const _checkDailyAndTest = function (freqType: any): any {
     switch (freqType) {
         case 'custom':
         case 'daily':
@@ -69,7 +69,7 @@ const _checkDailyAndTest = function (freqType: any) {
  * @param frequency
  * @returns {*}
  */
-const getFrequency = function (frequency: string) {
+const getFrequency = function (frequency: string): any {
     const _f = frequency.toLowerCase().match(/^(\d+)([mh])$/)
     if (_f) {
         return _checkNumAndType(_f[2], parseInt(_f[1]))
@@ -112,7 +112,7 @@ const parseFileSize = function (size: string): number {
  * @param {boolean} utc
  * @returns {string}
  */
-const getDate = function (format: { type: string, digit: number }, date_format: string, utc: boolean) {
+const getDate = function (format: { type: string, digit: number }, date_format: string, utc: boolean): string {
     date_format = date_format || DATE_FORMAT
     const currentMoment = utc ? moment.utc() : moment().local()
     if (format && staticFrequency.indexOf(format.type) !== -1) {
@@ -146,7 +146,7 @@ const getDate = function (format: { type: string, digit: number }, date_format: 
  * @property {String} auditLogSettings.auditLog
  * @property {Array} auditLogSettings.files
  */
-const setAuditLog = function (max_logs: { toString: () => string }, audit_file: string, log_file: string) {
+const setAuditLog = function (max_logs: { toString: () => string }, audit_file: string, log_file: string): object {
     let _rtn = null
     if (max_logs) {
         const use_days = max_logs.toString().substr(-1)
@@ -365,10 +365,9 @@ const addLogToAudit = function (logfile: any, audit: { files: { date: number, na
  * @param options.symlink_name
  * @returns {Object} stream
  */
-const getStream = function (options: { filename: string, frequency: string, max_logs: any, audit_file: any, verbose: boolean, size: string, date_format: string, utc: boolean, create_symlink: boolean, extension: string, file_options: { flags: string }, symlink_name: any, watch_log: any, end_stream: boolean }) {
+const getStream = function (options: { filename: string, frequency: string, max_logs: any, audit_file: any, verbose: boolean, size: string, date_format: string, utc: boolean, create_symlink: boolean, extension: string, file_options: { flags: string }, symlink_name: any, watch_log: any, end_stream: boolean }): object {
     let frequencyMetaData: { type: string } = null
     let curDate: any = null
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
 
     if (!options.filename) {
@@ -572,15 +571,15 @@ const getStream = function (options: { filename: string, frequency: string, max_
         })
         stream.emit('new', logfile)
         return stream
-    } else {
-        if (self.verbose) {
-            console.log(new Date(), '[FileStreamRotator] File won\'t be rotated: ', options.frequency, options.size)
-        }
-        process.nextTick(() => {
-            rotateStream.emit('new', logfile)
-        })
-        return rotateStream
     }
+    if (self.verbose) {
+        console.log(new Date(), '[FileStreamRotator] File won\'t be rotated: ', options.frequency, options.size)
+    }
+    process.nextTick(() => {
+        rotateStream.emit('new', logfile)
+    })
+    return rotateStream
+
 }
 
 /**

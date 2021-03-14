@@ -3,6 +3,7 @@ import fs from 'fs';
 import moment from 'moment';
 import events from 'events';
 import { URL } from 'url';
+
 declare const FileStreamRotator: {
     getFrequency: (frequency: string) => false | {
         type: any;
@@ -45,22 +46,22 @@ declare const FileStreamRotator: {
         };
     };
     getStream: (options: {
-        filename: string;
-        frequency: string;
-        max_logs: any;
-        audit_file: any;
+        filename?: string;
+        frequency?: string;
+        max_logs?: any;
+        audit_file?: any;
         verbose: boolean;
-        size: string;
-        date_format: string;
-        utc: boolean;
-        create_symlink: boolean;
-        extension: string;
-        file_options: {
+        size?: string;
+        date_format?: string;
+        utc?: boolean;
+        create_symlink?: boolean;
+        extension?: string;
+        file_options?: {
             flags: string;
         };
-        symlink_name: any;
-        watch_log: any;
-        end_stream: boolean;
+        symlink_name?: any;
+        watch_log?: any;
+        end_stream?: boolean;
     }) => fs.WriteStream | (NodeJS.WriteStream & {
         fd: 1;
     }) | (events.EventEmitter & {
