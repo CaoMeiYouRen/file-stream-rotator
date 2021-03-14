@@ -50,7 +50,7 @@ declare const FileStreamRotator: {
         frequency?: string;
         max_logs?: any;
         audit_file?: any;
-        verbose: boolean;
+        verbose?: boolean;
         size?: string;
         date_format?: string;
         utc?: boolean;
